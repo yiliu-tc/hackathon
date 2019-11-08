@@ -1,0 +1,7 @@
+*.project
+*.classpath
+**/target
+*.iml
+.idea/*
+**/main/webapp/ui/.vscode
+**/main/webapp/ui/node_modules

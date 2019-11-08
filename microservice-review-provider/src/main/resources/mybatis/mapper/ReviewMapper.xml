@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ca.gc.tc.hackathon.dao.ReviewDao">
+    <select id="findById" resultMap="reviewmap" parameterType="Integer">
+        select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id where r.r_id=#{id}
+    </select>
+    <select id="findAll" resultMap="reviewmap">
+        select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id ORDER BY r.r_id
+    </select>
+    <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" >
+        INSERT INTO review(rate_type_id, r_comment) VALUES(#{r_type_id},#{r_comment});
+    </insert>
+    <insert id="addReviews" parameterType="java.util.List">
+        INSERT INTO review (rate_type_id, r_comment) values
+        <foreach collection="list" item="element" index="index" open="(" separator="),("  close=")" >
+            #{element.r_type_id},#{element.r_comment}
+        </foreach>
+    </insert>
+
+    <!-- resultMap:map entity class to data field -->
+    <resultMap id="reviewmap" type="Review">
+        <id property="r_id" column="r_id" />
+        <result property="r_comment" column="r_comment" />
+        <association property="r_type" resultMap="ratingtypemap"/>
+    </resultMap>
+    <resultMap id="ratingtypemap" type="RatingType">
+        <id property="rate_type_id" column="rate_type_id"/>
+        <result property="rate_type_des" column="rate_type_des" />
+    </resultMap>
+</mapper>

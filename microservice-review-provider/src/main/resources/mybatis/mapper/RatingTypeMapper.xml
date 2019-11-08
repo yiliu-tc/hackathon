@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ca.gc.tc.hackathon.dao.RatingTypeDao">
+    <select id="findById" resultType="RatingType" parameterType="Integer">
+        select * from rate_type where rate_type_id=#{rate_type_id};
+    </select>
+    <select id="findAll" resultType="RatingType">
+        select * from rate_type ORDER BY rate_type_id;
+    </select>
+</mapper>

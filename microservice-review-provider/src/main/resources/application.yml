@@ -1,0 +1,24 @@
+server:
+  port: 8001
+
+mybatis:
+  config-location: classpath:mybatis/mybatis.cfg.xml # mybatis config file path
+  type-aliases-package: ca.gc.tc.hackathon
+  mapper-locations:
+    - classpath:mybatis/mapper/**/*.xml        #mapper file
+
+spring:
+  application:
+    name: microservice-review-provider
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource     # datasource
+    driver-class-name: com.mysql.cj.jdbc.Driver        # mysql driver
+    url: jdbc:mysql://52.179.9.236:3306/microserviceDB01?serverTimezone=UTC&useSSL=false
+    #url: jdbc:mysql://localhost:3307/microserviceDB01?serverTimezone=UTC&useSSL=false
+    username: test
+    password: password
+    dbcp2:
+      min-idle: 5                                    # minimum connection pool size
+      initial-size: 5                                # initial pool size
+      max-total: 10                                   # maximum connection pool size
+      max-wait-millis: 200                            # maximum waiting time in millisecond
