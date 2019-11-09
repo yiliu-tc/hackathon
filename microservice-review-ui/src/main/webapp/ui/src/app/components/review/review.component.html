@@ -1,68 +1,108 @@
 <div style="text-align:center">
-    <h1>
-      Welcome to Hackathon Online Service!
-    </h1>
-    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-      <div class="ui-grid-row">
-          <div class="ui-grid-col-1" style="text-align:right">
-          </div>
-          <div class="ui-grid-col-5">
-            <p-chart type="pie" [data]="data" width="40vw" [options]="options" height="80vh" (onDataSelect)="selectData($event)"></p-chart>
-          </div>
-          <div class="ui-grid-col-6" style="text-align:right">
-            <div class="ui-grid-row" style="margin: 50px 0px">
-                <div class="ui-grid-col-5" style="text-align:right">
-                 
-                </div>
-                <div class="ui-grid-col-4">
-                </div>
-              </div>
-            <div class="ui-grid-row" style="margin: 10px 0px">
-                <div class="ui-grid-col-5" style="text-align:right">
-                 
-                </div>
-                <div class="ui-grid-col-4">
-                    Your Satifcation Level<span style="color:red">*</span>:
-                </div>
-              </div>
-
-              <div class="ui-grid-row" style="margin: 10px 0px">
-                <div class="ui-grid-col-5" style="text-align:right">
-                    <p-message severity="error" text="Required" *ngIf="ratingType.errors?.required"></p-message>
-                </div>
-                <div class="ui-grid-col-4">
-                  <p-dropdown [options]="ratingTypes" name="ratingType" #ratingType="ngModel" [(ngModel)]="review.r_type_id" placeholder="--Select--"></p-dropdown>
-                </div>
-              </div>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-5" style="text-align:right">
-                  
-                </div>
-                <div class="ui-grid-col-4">
-                    Your Comments (Max Length 250 char):
-                </div>
-              </div>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-5" style="text-align:right">
-                </div>
-                <div class="ui-grid-col-4">
-                    <textarea asdfatype="text" pInputTextarea name="reviewComments" maxlength="250" [(ngModel)]="review.r_comment" 
-                    [rows]="5" [cols]="30" autoResize="autoResize" #reviewComments="ngModel"></textarea>
-                </div>
-              </div>
-
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-5" style="text-align:right">
-                </div>
-                <div class="ui-grid-col-4">
-                    <button pButton type="button" [disabled]="!review.r_type_id" label="Submit Your Feedback"  icon="fa fa-plus" (click)="submitNewReview(review)"></button>
-                </div>
-              </div>
-              
-          </div>
+  <h1>
+    Welcome to Hackathon Online Service!
+  </h1>
+  <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-1" style="text-align:right">
       </div>
-  
+      <div class="ui-grid-col-5">
+        <p-chart type="pie" [data]="data" width="40vw" [options]="options" height="80vh"></p-chart>
+      </div>
+      <div class="ui-grid-col-5" style="text-align:right">
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+
+          </div>
+          <div class="ui-grid-col-4">
+          </div>
+        </div>
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+
+          </div>
+          <div class="ui-grid-col-6">
+            Your Rating<span style="color:red">*</span>:
+          </div>
+        </div>
+
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+            <p-message severity="error" text="Required" *ngIf="ratingType.errors?.required"></p-message>
+          </div>
+          <div class="ui-grid-col-6">
+            <p-dropdown [options]="ratingTypes" name="ratingType" #ratingType="ngModel" [(ngModel)]="review.r_type_id"
+              placeholder="-- Select --"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-5" style="text-align:right">
+
+          </div>
+          <div class="ui-grid-col-6">
+            Your Comments(Max Length 250):
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-5" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-6">
+            <textarea asdfatype="text" pInputTextarea name="reviewComments" maxlength="250"
+              [(ngModel)]="review.r_comment" [rows]="5" [cols]="30" autoResize="autoResize"
+              #reviewComments="ngModel"></textarea>
+          </div>
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-7" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-4">
+            <button pButton type="button" [disabled]="!review.r_type_id" label="Submit Your Review" icon="fa fa-plus"
+              (click)="submitNewReview(review)"></button>
+          </div>
+        </div>
+        <div class="ui-grid-row" style="margin: 15px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-4">
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-8">
+
+              <p-growl [style]="{marginTop: '80px', marginRight: '170px'}" [(value)]="messages"></p-growl>
+            <!-- <p-toast [style]="{marginTop: '80px', marginRight: '170px'}"></p-toast> -->
+            <!-- <p-messages ([value])="messages"></p-messages> -->
+            <p-table id="ReviewsTable" [value]="reviews" [paginator]="true" [rows]="5" selectionMode="single" [(selection)]="selectReview">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th [pSortableColumn]="'r_type_des'">Reviews Summary<p-sortIcon [field]="'r_type_des'">
+                    </p-sortIcon>
+                  </th>
+                  <th style="width:4em"></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" width="100%" let-review>
+                <tr [pSelectableRow]="review" [ngClass]="review.r_type_id === 1 ? 'excellent-rating' : review.r_type_id === 2 ? 'moderate-rating' : 'poor-rating'">
+                  <td >
+                    {{review.r_type_des}}
+                  </td>
+                  <td>
+                      <button pButton icon="fa fa-search" (click)="selectReview(review)"></button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+                Total Reviews : {{reviews.length}}
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-  
-    
-  </div>
+</div>

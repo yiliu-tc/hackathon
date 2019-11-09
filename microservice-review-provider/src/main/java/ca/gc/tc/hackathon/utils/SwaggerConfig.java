@@ -48,10 +48,10 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfo(
                 "YI LIU HACKATHON REST API",
-                "REST APIs for Review and Rating Type.",
+                "REST APIs for Reviews and Rating Types.",
                 "1.0.0.0",
                 "Apache License Version 2.0",
-                new Contact("YI LIU", "http://www.jxyiliu.com/about.html", "yi.liu@tc.gc.ca"),
+                new Contact("YI LIU HACKATHON", "https://yiliu-hackathon.azurewebsites.net", "yi.liu@tc.gc.ca"),
                 "License of API", "https://www.apache.org/licenses/LICENSE-2.0", Collections.emptyList());
     }
 }

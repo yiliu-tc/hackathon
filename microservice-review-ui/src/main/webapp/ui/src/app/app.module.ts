@@ -22,10 +22,13 @@ import {
   GrowlModule,
   CheckboxModule,
   RadioButtonModule,
-  
+  CarouselModule,
+  MessageService,
 } from 'primeng/primeng';
 import {TooltipModule} from 'primeng/tooltip';
 import { ButtonModule } from 'primeng/button';
+import {TableModule} from 'primeng/table';
+import {ToastModule} from 'primeng/toast';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -35,6 +38,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     ReviewComponent
   ],
   imports: [
+    CarouselModule,
+    ToastModule,
+    TableModule,
     TooltipModule,
     ButtonModule,
     FormsModule,
@@ -62,7 +68,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     RadioButtonModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

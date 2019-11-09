@@ -6,8 +6,8 @@ import ca.gc.tc.hackathon.model.ReviewVO;
 import java.util.List;
 
 public interface ReviewService {
-    public int add(ReviewVO review);
-    public boolean add(List<ReviewVO> reviews);
+    public Review add(ReviewVO review);
+    public List<Review> add(List<ReviewVO> reviews);
     public Review get(Integer id);
     public List<Review> list();
 }

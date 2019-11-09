@@ -6,12 +6,12 @@
         select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id where r.r_id=#{id}
     </select>
     <select id="findAll" resultMap="reviewmap">
-        select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id ORDER BY r.r_id
+        select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id ORDER BY r.r_id DESC
     </select>
-    <insert id="addReview" parameterType="ReviewVO" useGeneratedKeys="true" >
+    <insert id="addReview" parameterType="ReviewDTO" useGeneratedKeys="true" keyProperty="r_id">
         INSERT INTO review(rate_type_id, r_comment) VALUES(#{r_type_id},#{r_comment});
     </insert>
-    <insert id="addReviews" parameterType="java.util.List">
+    <insert id="addReviews" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="r_id">
         INSERT INTO review (rate_type_id, r_comment) values
         <foreach collection="list" item="element" index="index" open="(" separator="),("  close=")" >
             #{element.r_type_id},#{element.r_comment}

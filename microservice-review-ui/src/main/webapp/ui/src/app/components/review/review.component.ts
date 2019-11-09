@@ -3,7 +3,9 @@ import { ReviewSearchResultItem } from '../../models/review-search-result-item';
 import { ReviewService } from '../../services/review-service.service';
 import { RatingType } from 'src/app/models/rating-type';
 import { Review } from 'src/app/models/review';
-import { SelectItem} from 'primeng/api';
+import { SelectItem, MessageService} from 'primeng/api';
+import { ReviewVo } from 'src/app/models/review-vo';
+import {Message} from 'primeng/components/common/api';
 
 @Component({
   selector: 'app-review',
@@ -14,17 +16,18 @@ import { SelectItem} from 'primeng/api';
 export class ReviewComponent implements OnInit {
 
   data: any;
-  reviews: ReviewSearchResultItem[];
+  reviews: ReviewVo[];
   options: any;
   excellentCount: number;
   moderateCount: number;
   poorCount: number;
   review: Review;
   ratingTypes: SelectItem[];
-  constructor(private reviewService: ReviewService) {
+  totalCount: number;
+  messages: Message[] = [];
+  constructor(private messageService: MessageService, private reviewService: ReviewService) {
+    this.reviews = new Array();
      this.resetData();
-     this.reviews = new Array();
-     this.review = new Review();
      this.ratingTypes = [{label: 'Excellent', value: 1},
                         {label: 'Moderate', value: 2},
                         {label: 'Needs Improvement', value: 3}];
@@ -34,6 +37,8 @@ export class ReviewComponent implements OnInit {
     this.excellentCount = 0;
     this.moderateCount = 0;
     this.poorCount = 0;
+
+    this.review = new Review();
   }
 
   ngOnInit() {
@@ -42,10 +47,11 @@ export class ReviewComponent implements OnInit {
 
   private loadReviews() {
     this.reviewService.loadReviews().subscribe(results => {
-      this.reviews = results;
+      this.reviews = new Array();
       results.forEach((element) => {
         const rate_type: RatingType = element.r_type;
         if (rate_type) {
+          this.reviews.push({r_type_id: rate_type.rate_type_id, r_type_des: rate_type.rate_type_des, r_comment: element.r_comment});
           switch (rate_type.rate_type_id) {
             case 1:
               this.excellentCount++;
@@ -59,6 +65,7 @@ export class ReviewComponent implements OnInit {
           }
         }
       });
+      this.totalCount = this.reviews.length;
       this.data = {
         labels: ['Excellent', 'Moderate', 'Needs Improvement'],
         datasets: [
@@ -92,13 +99,12 @@ export class ReviewComponent implements OnInit {
 
    submitNewReview(review: Review) {
      this.reviewService.saveReview(review).subscribe(results => {
-       this.review = new Review();
        this.resetData();
        this.loadReviews();
      });
   }
-
-  selectData($event) {
-    
-  }
+  selectReview(review: ReviewVo) {
+    // this.msgs.push({severity:'info', summary: 'Rating: ' + review.r_type_des, detail: 'Comment: ' + review.r_comment});
+    this.messageService.add({severity: 'info', summary: 'Rating:' + review.r_type_des, detail: '<span class="ui-growl-title">Comment:</span>' + review.r_comment});
+}
 }

@@ -2,6 +2,8 @@ package ca.gc.tc.hackathon.service.impl;
 
 import ca.gc.tc.hackathon.dao.ReviewDao;
 import ca.gc.tc.hackathon.entity.Review;
+import ca.gc.tc.hackathon.factory.ReviewFactory;
+import ca.gc.tc.hackathon.model.ReviewDTO;
 import ca.gc.tc.hackathon.service.ReviewService;
 import ca.gc.tc.hackathon.model.ReviewVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +17,21 @@ public class ReviewServiceImpl implements ReviewService {
     @Autowired
     private ReviewDao dao;
 
+    @Autowired
+    private ReviewFactory factory;
+
     @Override
-    public int add(ReviewVO review) {
-        return dao.addReview(review);
+    public Review add(ReviewVO review) {
+        ReviewDTO dto = factory.getDTOFromVO(review);
+        dao.addReview(dto);
+        return factory.getEntityFromDTO(dto);
     }
 
     @Override
-    public boolean add(List<ReviewVO> reviews) {
-        return dao.addReviews(reviews);
+    public List<Review> add(List<ReviewVO> reviews) {
+        List<ReviewDTO> dtoList = factory.getDTOListFromVOList(reviews);
+        dao.addReviews(dtoList);
+        return factory.getEntityListFromDTOList(dtoList);
     }
 
     @Override

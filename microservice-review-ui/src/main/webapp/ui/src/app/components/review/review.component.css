@@ -1,0 +1,14 @@
+.excellent-rating{
+    background-color: #03fc62 !important;
+    color: #ffffff !important;
+}
+
+.moderate-rating {
+    background-color: #fcdb03 !important;
+    color: #ffffff !important;
+}
+
+.poor-rating {
+    background-color: #fc033d !important;
+    color: #ffffff !important;
+}
