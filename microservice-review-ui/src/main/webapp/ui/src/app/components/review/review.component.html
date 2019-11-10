@@ -1,7 +1,44 @@
-<div style="text-align:center">
-  <h1>
-    Welcome to Hackathon Online Service!
-  </h1>
+<p-messages [(value)]="msgs"></p-messages>
+<div *ngIf="!userLoggedIn" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 80px 0px">
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-5" style="text-align:right">
+      User Name :
+    </div>
+    <div class="ui-grid-col-4">
+      <input type="text" pInputText name="UserName" [(ngModel)]="credentials.userName">
+    </div>
+  </div>
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-5" style="text-align:right">
+      Password :
+    </div>
+    <div class="ui-grid-col-4">
+      <input type="password" pInputText name="Password" [(ngModel)]="credentials.password">
+    </div>
+  </div>  
+  <div class="ui-grid-row">
+    <div class="ui-grid-col-5" style="text-align:right">
+    </div>
+    <div class="ui-grid-col-4">
+      <button pButton type="button" label="Login" icon="fa fa-login"
+        (click)="login()"></button>
+    </div>
+  </div>        
+</div>  
+
+<div *ngIf="userLoggedIn" style="text-align:center">
+    <div class="ui-grid-row">
+        <div class="ui-grid-col-7" style="text-align:right">
+            <h1>
+                Welcome to Hackathon Online Service!
+              </h1>
+        </div>
+        <div class="ui-grid-col-2">
+          <button pButton type="button" label="Logout" icon="fa fa-sign-out"
+            (click)="logout()"></button>
+        </div>
+      </div>
+  
   <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
     <div class="ui-grid-row">
       <div class="ui-grid-col-1" style="text-align:right">

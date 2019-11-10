@@ -1,11 +1,15 @@
 import { Component, OnInit, Injectable} from '@angular/core';
-import { ReviewSearchResultItem } from '../../models/review-search-result-item';
 import { ReviewService } from '../../services/review-service.service';
 import { RatingType } from 'src/app/models/rating-type';
 import { Review } from 'src/app/models/review';
 import { SelectItem, MessageService} from 'primeng/api';
 import { ReviewVo } from 'src/app/models/review-vo';
 import {Message} from 'primeng/components/common/api';
+import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { LoginUser } from 'src/app/models/loginuser';
+
+const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUserToken';
 
 @Component({
   selector: 'app-review',
@@ -25,24 +29,75 @@ export class ReviewComponent implements OnInit {
   ratingTypes: SelectItem[];
   totalCount: number;
   messages: Message[] = [];
-  constructor(private messageService: MessageService, private reviewService: ReviewService) {
-    this.reviews = new Array();
-     this.resetData();
-     this.ratingTypes = [{label: 'Excellent', value: 1},
+  userLoggedIn: boolean;
+  credentials: LoginUser;
+  msgs: Message[] = [];
+
+
+  constructor(private messageService: MessageService,
+    private reviewService: ReviewService, private loginService: LoginService) {
+      this.credentials = new LoginUser();
+      this.userLoggedIn = false;
+      this.reviews = new Array();
+      this.resetData();
+      this.ratingTypes = [{label: 'Excellent', value: 1},
                         {label: 'Moderate', value: 2},
                         {label: 'Needs Improvement', value: 3}];
+      this.checkUserLoggedIn();
   }
 
   private resetData() {
     this.excellentCount = 0;
     this.moderateCount = 0;
     this.poorCount = 0;
-
     this.review = new Review();
   }
 
   ngOnInit() {
-    this.loadReviews();
+    if (this.userLoggedIn) {
+      this.loadReviews();
+    }
+  }
+
+  login() {
+    if (!this.credentials.password || !this.credentials.userName) {
+      return;
+    }
+    this.loginService.login(this.credentials).subscribe((isValid) => {
+      if (isValid) {
+        this.registerSuccessfulLogin(this.createBasicAuthToken(this.credentials));
+        this.loadReviews();
+      } else {
+        this.msgs = [];
+        this.msgs.push({severity: 'error', summary: 'Invalid User Crendential'});
+      }
+    }, () => {
+      this.msgs = [];
+        this.msgs.push({severity: 'error', summary: 'Invalid User Crendential'});
+    });
+  }
+
+  private registerSuccessfulLogin(token: string) {
+    sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, token);
+    this.userLoggedIn = true;
+  }
+
+  public logout() {
+    sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+    this.userLoggedIn = false;
+  }
+
+  private createBasicAuthToken(credentials: LoginUser): string {
+    return 'Basic ' + btoa(credentials.userName + ':' + credentials.password);
+  }
+
+  public checkUserLoggedIn() {
+    const token = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+    if (token === null) {
+      this.userLoggedIn = false;
+    } else {
+      this.userLoggedIn = true;
+    }
   }
 
   private loadReviews() {
@@ -105,6 +160,6 @@ export class ReviewComponent implements OnInit {
   }
   selectReview(review: ReviewVo) {
     // this.msgs.push({severity:'info', summary: 'Rating: ' + review.r_type_des, detail: 'Comment: ' + review.r_comment});
-    this.messageService.add({severity: 'info', summary: 'Rating:' + review.r_type_des, detail: '<span class="ui-growl-title">Comment:</span>' + review.r_comment});
-}
+    this.messageService.add({severity: 'info', summary: 'Rating:'+review.r_type_des, detail: 'Comment:' + review.r_comment});
+  }
 }

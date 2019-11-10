@@ -22,3 +22,10 @@ spring:
       initial-size: 5                                # initial pool size
       max-total: 10                                   # maximum connection pool size
       max-wait-millis: 200                            # maximum waiting time in millisecond
+
+
+logging:
+  level:
+    root: ERROR
+    org.springframework: DEBUG
+    org.hibernate: ERROR

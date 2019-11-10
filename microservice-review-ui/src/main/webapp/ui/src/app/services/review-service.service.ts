@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {catchError} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../environments/environment';
 import { ReviewSearchResultItem } from '../models/review-search-result-item';
 import { Review } from '../models/review';
 
+const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUserToken';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
-  })
-};
 
 @Injectable({
   providedIn: 'root'
@@ -21,30 +16,50 @@ export class ReviewService {
 
   constructor(private http: HttpClient) { }
 
-
   public loadReviews( ):  Observable<any> {
-    return this.http.get<Observable<ReviewSearchResultItem[]>>(environment.api + '/v1/reviews', httpOptions)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+      })
+    };
+    return this.http.get<Observable<ReviewSearchResultItem[]>>(environment.api + '/api/v1/reviews', httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   public loadReviewDetail(reviewId: string):  Observable<any> {
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+      })
+    };
     return this.http.get<Observable<ReviewSearchResultItem>>(environment.api
-      + '/v1/reviews/' + reviewId,  httpOptions)
+      + '/api/v1/reviews/' + reviewId,  httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   public saveReview(review: Review):  Observable<any> {
-    return this.http.post<Observable<Review>>(environment.api + '/v1/review', review, httpOptions)
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
+      })
+    };
+    return this.http.post<Observable<Review>>(environment.api + '/api/v1/review', review, httpOptions)
       .pipe(
         catchError(this.handleError)
       );
   }
 
   private handleError(error: HttpErrorResponse) {
+
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error.message);

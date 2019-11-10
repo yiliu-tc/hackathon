@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/rating-types")
+@RequestMapping("/api/v1")
 @Api(value="yiliu_hackathon", description="query rating types for yi liu hackathon")
 public class RatingTypeController {
 
@@ -24,7 +24,7 @@ public class RatingTypeController {
     private RatingTypeService service;
 
     @CrossOrigin
-    @GetMapping(value="/{id}")
+    @GetMapping(value="/rating-types/{id}")
     @ApiOperation(value = "Search an Rating Type with rating type ID", response = Iterable.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully get result"),
@@ -39,7 +39,7 @@ public class RatingTypeController {
     }
 
     @CrossOrigin
-    @GetMapping(value="/")
+    @GetMapping(value="/rating-types")
     @ApiOperation(value = "View a list of available rating types", response = Iterable.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully Get All Rating Types"),
