@@ -31,13 +31,14 @@ import {TableModule} from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
+import {CardModule} from 'primeng/card';
 @NgModule({
   declarations: [
     AppComponent,
     ReviewComponent
   ],
   imports: [
+    CardModule,
     CarouselModule,
     ToastModule,
     TableModule,

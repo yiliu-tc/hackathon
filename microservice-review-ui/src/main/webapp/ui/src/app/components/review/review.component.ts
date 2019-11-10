@@ -61,6 +61,8 @@ export class ReviewComponent implements OnInit {
 
   login() {
     if (!this.credentials.password || !this.credentials.userName) {
+      this.msgs = [];
+      this.msgs.push({severity: 'info', summary: 'User Name and Password can not be empty'});
       return;
     }
     this.loginService.login(this.credentials).subscribe((isValid) => {
@@ -69,11 +71,11 @@ export class ReviewComponent implements OnInit {
         this.loadReviews();
       } else {
         this.msgs = [];
-        this.msgs.push({severity: 'error', summary: 'Invalid User Crendential'});
+        this.msgs.push({severity: 'info', summary: 'Invalid User Crendential'});
       }
     }, () => {
       this.msgs = [];
-        this.msgs.push({severity: 'error', summary: 'Invalid User Crendential'});
+        this.msgs.push({severity: 'info', summary: 'Invalid User Crendential'});
     });
   }
 
