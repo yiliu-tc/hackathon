@@ -5,7 +5,7 @@ import { Review } from 'src/app/models/review';
 import { SelectItem, MessageService} from 'primeng/api';
 import { ReviewVo } from 'src/app/models/review-vo';
 import {Message} from 'primeng/components/common/api';
-import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/components/common/confirmationservice';
 import { LoginService } from 'src/app/services/login.service';
 import { LoginUser } from 'src/app/models/loginuser';
 
@@ -14,7 +14,8 @@ const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUserToken';
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.css']
+  styleUrls: ['./review.component.css'],
+  providers: [ConfirmationService]
 })
 
 export class ReviewComponent implements OnInit {
@@ -32,10 +33,12 @@ export class ReviewComponent implements OnInit {
   userLoggedIn: boolean;
   credentials: LoginUser;
   msgs: Message[] = [];
-
+  reviewDetail: ReviewVo;
+  showReviewDetails: boolean;
 
   constructor(private messageService: MessageService,
-    private reviewService: ReviewService, private loginService: LoginService) {
+    private reviewService: ReviewService, private loginService: LoginService,
+    private confirmationService: ConfirmationService) {
       this.credentials = new LoginUser();
       this.userLoggedIn = false;
       this.reviews = new Array();
@@ -51,6 +54,8 @@ export class ReviewComponent implements OnInit {
     this.moderateCount = 0;
     this.poorCount = 0;
     this.review = new Review();
+    this.reviewDetail = new ReviewVo();
+    this.showReviewDetails = false;
   }
 
   ngOnInit() {
@@ -108,7 +113,10 @@ export class ReviewComponent implements OnInit {
       results.forEach((element) => {
         const rate_type: RatingType = element.r_type;
         if (rate_type) {
-          this.reviews.push({r_type_id: rate_type.rate_type_id, r_type_des: rate_type.rate_type_des, r_comment: element.r_comment});
+          this.reviews.push({r_type_id: rate_type.rate_type_id,
+                             r_type_des: rate_type.rate_type_des,
+                             r_comment: element.r_comment,
+                             r_date: element.r_date});
           switch (rate_type.rate_type_id) {
             case 1:
               this.excellentCount++;
@@ -161,7 +169,11 @@ export class ReviewComponent implements OnInit {
      });
   }
   selectReview(review: ReviewVo) {
-    // this.msgs.push({severity:'info', summary: 'Rating: ' + review.r_type_des, detail: 'Comment: ' + review.r_comment});
-    this.messageService.add({severity: 'info', summary: 'Rating:'+review.r_type_des, detail: 'Comment:' + review.r_comment});
+    this.reviewDetail = review;
+    this.showReviewDetails = true;
+  }
+  closeReviewDetial() {
+    this.showReviewDetails = false;
+    this.reviewDetail = new ReviewVo();
   }
 }

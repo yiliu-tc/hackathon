@@ -9,12 +9,12 @@
         select r.*, rt.* from review r left outer join rate_type rt on r.rate_type_id = rt.rate_type_id ORDER BY r.r_id DESC
     </select>
     <insert id="addReview" parameterType="ReviewDTO" useGeneratedKeys="true" keyProperty="r_id">
-        INSERT INTO review(rate_type_id, r_comment) VALUES(#{r_type_id},#{r_comment});
+        INSERT INTO review(rate_type_id, r_comment, r_date) VALUES(#{r_type_id},#{r_comment},SYSDATE());
     </insert>
     <insert id="addReviews" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="r_id">
-        INSERT INTO review (rate_type_id, r_comment) values
+        INSERT INTO review (rate_type_id, r_comment, r_date) values
         <foreach collection="list" item="element" index="index" open="(" separator="),("  close=")" >
-            #{element.r_type_id},#{element.r_comment}
+            #{element.r_type_id},#{element.r_comment},SYSDATE()
         </foreach>
     </insert>
 
@@ -22,6 +22,7 @@
     <resultMap id="reviewmap" type="Review">
         <id property="r_id" column="r_id" />
         <result property="r_comment" column="r_comment" />
+        <result property="r_date" column="r_date" />
         <association property="r_type" resultMap="ratingtypemap"/>
     </resultMap>
     <resultMap id="ratingtypemap" type="RatingType">

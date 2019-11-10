@@ -1,5 +1,7 @@
 package ca.gc.tc.hackathon.security.config;
 
+import ca.gc.tc.hackathon.entity.LoginUser;
+import ca.gc.tc.hackathon.service.LoginUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +10,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.List;
 
 
 @Configuration
@@ -22,6 +26,9 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LoginUserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception
@@ -40,8 +47,15 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception
     {
+//        List<LoginUser> userList = userService.list();
+//        for (LoginUser user : userList) {
+//            auth.inMemoryAuthentication()
+//                    .withUser(user.getUser_name()).password(passwordEncoder.encode(user.getClient_secret())).roles(user.getAuthorized_grant_type());
+//        }
+
+
         auth.inMemoryAuthentication()
                 .withUser("test").password(passwordEncoder.encode("123")).roles("USER").and()
-                .withUser("user").password(passwordEncoder.encode("pass1234")).roles("ADMIN");
+                .withUser("user").password(passwordEncoder.encode("pass1234")).roles("USER");
     }
 }

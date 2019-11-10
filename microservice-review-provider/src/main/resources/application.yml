@@ -24,8 +24,8 @@ spring:
       max-wait-millis: 200                            # maximum waiting time in millisecond
 
 
-logging:
-  level:
-    root: ERROR
-    org.springframework: DEBUG
-    org.hibernate: ERROR
+#logging:
+#  level:
+#    root: ERROR
+#    org.springframework: DEBUG
+#    org.hibernate: ERROR

@@ -5,5 +5,6 @@ export class ReviewSearchResultItem {
   r_id: Number;
   r_Type: RatingType;
   r_comment: string;
+  r_date: Date;
 
 }

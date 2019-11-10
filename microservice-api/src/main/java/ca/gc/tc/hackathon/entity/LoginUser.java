@@ -13,12 +13,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Accessors(chain=true)
-public class Review extends ResourceSupport implements Serializable {
+public class LoginUser extends ResourceSupport implements Serializable {
 
-    private Integer r_id;
-    private RatingType r_type;
-    private String r_comment;
-    private Date r_date;
+    private Integer client_id;
+    private String client_secret;
+    private String user_name;
+    private String authorized_grant_type;
 
 }
 
