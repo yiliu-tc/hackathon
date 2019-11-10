@@ -9,7 +9,7 @@
       &nbsp; &nbsp; &nbsp;
     </div>
     <div *ngIf="userLoggedIn" class="ui-grid-col-2">
-      &nbsp; &nbsp;
+      &nbsp; &nbsp;<br />
       <button pButton type="button" label="Logout" icon="fa fa-sign-out" (click)="logout()"></button>
     </div>
   </div>
@@ -132,48 +132,7 @@
         </div>
         <div class="ui-grid-col-8">
 
-          <p-dialog title="Review Details" [(visible)]="showReviewDetails" [style]="{width: '260px'}" styleClass="ui-card-shadow" [closable]="false">
-            <div class="ui-grid-row" style="margin: 20px 0px">
-              <div class="ui-grid-col-5" style="text-align:right">
-                <span style="font-weight:bold">Rating : </span>
-              </div>
-              <div class="ui-grid-col-4">
-                <span>{{reviewDetail.r_type_des}}</span>
-              </div>
-              <div class="ui-grid-col-3">
-              </div>
-            </div>
-            <div class="ui-grid-row" style="margin: 20px 0px">
-              <div class="ui-grid-col-5" style="text-align:right">
-                <span style="font-weight:bold">Comment : </span>
-              </div>
-              <div class="ui-grid-col-4">
-                {{reviewDetail.r_comment}}
-              </div>
-              <div class="ui-grid-col-3">
-              </div>
-            </div>
-            <div class="ui-grid-row" style="margin: 20px 0px">
-              <div class="ui-grid-col-5" style="text-align:right">
-                  <span style="font-weight:bold">Review Date : </span>
-              </div>
-              <div class="ui-grid-col-4">
-                {{reviewDetail.r_date | date:'yyyy-MM-dd' : 'UTC'}}
-              </div>
-              <div class="ui-grid-col-3">
-              </div>
-            </div>
-            <p-footer>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-5" style="text-align:right">
-                </div>
-                <div class="ui-grid-col-4">
-                  <button pButton type="button" label="Close" icon="fa fa-window-close"
-                    (click)="closeReviewDetial()"></button>
-                </div>
-              </div>
-            </p-footer>
-          </p-dialog>
+
           <p-table id="ReviewsTable" [value]="reviews" [paginator]="true" [rows]="5" selectionMode="single"
             [(selection)]="selectReview">
             <ng-template pTemplate="header">
@@ -205,3 +164,38 @@
     </div>
   </div>
 </div>
+
+<p-dialog header="Review Details" [modal]="true" [(visible)]="showReviewDetails" [responsive]="true" 
+          [style]="{width: '630px', minWidth: '320px'}" [closable]="false">
+  <div class="ui-grid-row" style="margin: 20px 0px">
+    <div class="ui-grid-col-3" style="text-align:right">
+      <span style="font-weight:bold">Rating : </span>
+    </div>
+    <div class="ui-grid-col-8">
+      <input type="text" pInputText name="reviewType" [ngModel]="reviewDetail.r_type_des" [disabled]="true">
+    </div>
+  </div>
+  <div class="ui-grid-row" style="margin: 20px 0px">
+    <div class="ui-grid-col-3" style="text-align:right">
+      <span style="font-weight:bold">Comment : </span>
+    </div>
+    <div class="ui-grid-col-8">
+      <textarea type="text" pInputTextarea name="reviwComments" [ngModel]="reviewDetail.r_comment" [disabled]="true"
+        rows="3" cols="30" ></textarea>
+    </div>
+  </div>
+  <div class="ui-grid-row" style="margin: 20px 0px">
+    <div class="ui-grid-col-3" style="text-align:right">
+      <span style="font-weight:bold">Review Date : </span>
+    </div>
+    <div class="ui-grid-col-8">
+      <input type="date" pInputText name="reviewDate" [ngModel]="reviewDetail.r_date | date:'yyyy-MM-dd' : 'UTC'"
+        [disabled]="true">
+    </div>
+  </div>
+  <p-footer>
+    <button pButton type="button" label="Close" icon="fa fa-window-close" (click)="closeReviewDetial()"></button>
+  </p-footer>
+</p-dialog>
+
+
