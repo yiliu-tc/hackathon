@@ -1,201 +1,203 @@
-<div style="text-align:center">
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-7" style="text-align:right">
-      <h1>
-        Welcome to Hackathon Online Service!
-      </h1>
-    </div>
-    <div class="ui-grid-col-2">
-      &nbsp; &nbsp; &nbsp;
-    </div>
-    <div *ngIf="userLoggedIn" class="ui-grid-col-2">
-      &nbsp; &nbsp;<br />
-      <button pButton type="button" label="Logout" icon="fa fa-sign-out" (click)="logout()"></button>
+<form (keydown)="keyDownFunction($event)">
+  <div style="text-align:center">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-7" style="text-align:right">
+        <h1>
+          Welcome to Hackathon Online Service!
+        </h1>
+      </div>
+      <div class="ui-grid-col-2">
+        &nbsp; &nbsp; &nbsp;
+      </div>
+      <div *ngIf="userLoggedIn" class="ui-grid-col-2">
+        &nbsp; &nbsp;<br />
+        <button pButton type="button" label="Logout" icon="fa fa-sign-out" (click)="logout()"></button>
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="!userLoggedIn" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
-  <div class="ui-grid-row" style="margin: 20px 0px">
-    <div class="ui-grid-col-4">
-    </div>
-    <div class="ui-grid-col-8">
-      <p-card title="User Login" [style]="{width: '360px'}" styleClass="ui-card-shadow">
-        <p-messages [(value)]="msgs"></p-messages>
-        <p-header>
-          <img src="Card" src="assets/usercard.png">
-        </p-header>
-        <div class="ui-grid-row" style="margin: 20px 0px">
-          <div class="ui-grid-col-5" style="text-align:right">
-            User Name <span style="color:red">*</span>:
-          </div>
-          <div class="ui-grid-col-4">
-            <input type="text" required pInputText name="UserName" [(ngModel)]="credentials.userName"
-              #UserName="ngModel">
-          </div>
-          <div class="ui-grid-col-3">
-          </div>
-        </div>
-        <div class="ui-grid-row" style="margin: 20px 0px">
-          <div class="ui-grid-col-5" style="text-align:right">
-            Password <span style="color:red">*</span>:
-          </div>
-          <div class="ui-grid-col-4">
-            <input type="password" pInputText required name="Password" [(ngModel)]="credentials.password"
-              #Password="ngModel">
-          </div>
-          <div class="ui-grid-col-3">
-          </div>
-        </div>
-        <p-footer>
-          <div class="ui-grid-row">
+  <div *ngIf="!userLoggedIn" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+    <div class="ui-grid-row" style="margin: 20px 0px">
+      <div class="ui-grid-col-4">
+      </div>
+      <div class="ui-grid-col-8">
+        <p-card title="User Login" [style]="{width: '360px'}" styleClass="ui-card-shadow">
+          <p-messages [(value)]="msgs"></p-messages>
+          <p-header>
+            <img src="Card" src="assets/usercard.png">
+          </p-header>
+          <div class="ui-grid-row" style="margin: 20px 0px">
             <div class="ui-grid-col-5" style="text-align:right">
+              User Name <span style="color:red">*</span>:
             </div>
             <div class="ui-grid-col-4">
-              <button pButton type="button" label="Login" icon="fa fa-sign-in" (click)="login()"></button>
+              <input type="text" required pInputText name="UserName" [(ngModel)]="credentials.userName"
+                #UserName="ngModel">
+            </div>
+            <div class="ui-grid-col-3">
             </div>
           </div>
-        </p-footer>
+          <div class="ui-grid-row" style="margin: 20px 0px">
+            <div class="ui-grid-col-5" style="text-align:right">
+              Password <span style="color:red">*</span>:
+            </div>
+            <div class="ui-grid-col-4">
+              <input type="password" pInputText required name="Password" [(ngModel)]="credentials.password"
+                #Password="ngModel">
+            </div>
+            <div class="ui-grid-col-3">
+            </div>
+          </div>
+          <p-footer>
+            <div class="ui-grid-row">
+              <div class="ui-grid-col-5" style="text-align:right">
+              </div>
+              <div class="ui-grid-col-4">
+                <button pButton type="button" label="Login" icon="fa fa-sign-in" (click)="login()"></button>
+              </div>
+            </div>
+          </p-footer>
 
-      </p-card>
-    </div>
-    <div class="ui-grid-col-2">
+        </p-card>
+      </div>
+      <div class="ui-grid-col-2">
+      </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="userLoggedIn" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
-  <div class="ui-grid-row">
-    <div class="ui-grid-col-1" style="text-align:right">
-    </div>
-    <div class="ui-grid-col-5">
-      <p-chart type="pie" [data]="data" width="40vw" [options]="options" height="80vh"></p-chart>
-    </div>
-    <div class="ui-grid-col-5" style="text-align:right">
-      <div class="ui-grid-row" style="margin: 10px 0px">
-        <div class="ui-grid-col-5" style="text-align:right">
-
-        </div>
-        <div class="ui-grid-col-4">
-        </div>
+  <div *ngIf="userLoggedIn" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-1" style="text-align:right">
       </div>
-      <div class="ui-grid-row" style="margin: 10px 0px">
-        <div class="ui-grid-col-5" style="text-align:right">
-
-        </div>
-        <div class="ui-grid-col-6">
-          Your Rating<span style="color:red">*</span>:
-        </div>
+      <div class="ui-grid-col-5">
+        <p-chart type="pie" [data]="data" width="40vw" [options]="options" height="80vh"></p-chart>
       </div>
+      <div class="ui-grid-col-5" style="text-align:right">
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
 
-      <div class="ui-grid-row" style="margin: 10px 0px">
-        <div class="ui-grid-col-5" style="text-align:right">
-          <p-message severity="error" text="Required" *ngIf="ratingType.errors?.required"></p-message>
+          </div>
+          <div class="ui-grid-col-4">
+          </div>
         </div>
-        <div class="ui-grid-col-6">
-          <p-dropdown [options]="ratingTypes" name="ratingType" #ratingType="ngModel" [(ngModel)]="review.r_type_id"
-            placeholder="-- Select --"></p-dropdown>
-        </div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-5" style="text-align:right">
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
 
+          </div>
+          <div class="ui-grid-col-6">
+            Your Rating<span style="color:red">*</span>:
+          </div>
         </div>
-        <div class="ui-grid-col-6">
-          Your Comments(Max Length 250):
-        </div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-5" style="text-align:right">
-        </div>
-        <div class="ui-grid-col-6">
-          <textarea asdfatype="text" pInputTextarea name="reviewComments" maxlength="250" [(ngModel)]="review.r_comment"
-            [rows]="5" [cols]="30" autoResize="autoResize" #reviewComments="ngModel"></textarea>
-        </div>
-      </div>
 
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-7" style="text-align:right">
+        <div class="ui-grid-row" style="margin: 10px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+            <p-message severity="error" text="Required" *ngIf="ratingType.errors?.required"></p-message>
+          </div>
+          <div class="ui-grid-col-6">
+            <p-dropdown [options]="ratingTypes" name="ratingType" #ratingType="ngModel" [(ngModel)]="review.r_type_id"
+              placeholder="-- Select --"></p-dropdown>
+          </div>
         </div>
-        <div class="ui-grid-col-4">
-          <button pButton type="button" [disabled]="!review.r_type_id" label="Submit Your Review" icon="fa fa-plus"
-            (click)="submitNewReview(review)"></button>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-5" style="text-align:right">
+
+          </div>
+          <div class="ui-grid-col-6">
+            Your Comments(Max Length 250):
+          </div>
         </div>
-      </div>
-      <div class="ui-grid-row" style="margin: 15px 0px">
-        <div class="ui-grid-col-5" style="text-align:right">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-5" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-6">
+            <textarea asdfatype="text" pInputTextarea name="reviewComments" maxlength="250"
+              [(ngModel)]="review.r_comment" [rows]="5" [cols]="30" autoResize="autoResize"
+              #reviewComments="ngModel"></textarea>
+          </div>
         </div>
-        <div class="ui-grid-col-4">
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-7" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-4">
+            <button pButton type="button" [disabled]="!review.r_type_id" label="Submit Your Review" icon="fa fa-plus"
+              (click)="submitNewReview(review)"></button>
+          </div>
         </div>
-      </div>
-      <div class="ui-grid-row">
-        <div class="ui-grid-col-3" style="text-align:right">
+        <div class="ui-grid-row" style="margin: 15px 0px">
+          <div class="ui-grid-col-5" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-4">
+          </div>
         </div>
-        <div class="ui-grid-col-8">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-3" style="text-align:right">
+          </div>
+          <div class="ui-grid-col-8">
 
 
-          <p-table id="ReviewsTable" [value]="reviews" [paginator]="true" [rows]="5" selectionMode="single"
-            [(selection)]="selectReview">
-            <ng-template pTemplate="header">
-              <tr>
-                <th [pSortableColumn]="'r_type_des'">Reviews Summary<p-sortIcon [field]="'r_type_des'">
-                  </p-sortIcon>
-                </th>
-                <th style="width:4em"></th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" width="100%" let-review>
-              <tr [pSelectableRow]="review"
-                [ngClass]="review.r_type_id === 1 ? 'excellent-rating' : review.r_type_id === 2 ? 'moderate-rating' : 'poor-rating'">
-                <td pTooltip={{review.r_comment}} tooltipZIndex="3000">
-                  {{review.r_type_des}}
-                </td>
-                <td>
-                  <button pButton icon="fa fa-search" (click)="selectReview(review)"></button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-              Total Reviews : {{reviews.length}}
-            </ng-template>
-          </p-table>
+            <p-table id="ReviewsTable" [value]="reviews" [paginator]="true" [rows]="5" selectionMode="single"
+              [(selection)]="selectReview">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th [pSortableColumn]="'r_type_des'">Reviews Summary<p-sortIcon [field]="'r_type_des'">
+                    </p-sortIcon>
+                  </th>
+                  <th style="width:4em"></th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" width="100%" let-review>
+                <tr [pSelectableRow]="review"
+                  [ngClass]="review.r_type_id === 1 ? 'excellent-rating' : review.r_type_id === 2 ? 'moderate-rating' : 'poor-rating'">
+                  <td pTooltip={{review.r_comment}} tooltipZIndex="3000">
+                    {{review.r_type_des}}
+                  </td>
+                  <td>
+                    <button pButton icon="fa fa-search" (click)="selectReview(review)"></button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+                Total Reviews : {{reviews.length}}
+              </ng-template>
+            </p-table>
+          </div>
         </div>
-      </div>
 
+      </div>
     </div>
   </div>
-</div>
 
-<p-dialog header="Review Details" [modal]="true" [(visible)]="showReviewDetails" [responsive]="true" 
-          [style]="{width: '630px', minWidth: '320px'}" [closable]="false">
-  <div class="ui-grid-row" style="margin: 20px 0px">
-    <div class="ui-grid-col-3" style="text-align:right">
-      <span style="font-weight:bold">Rating : </span>
+  <p-dialog header="Review Details" [modal]="true" [(visible)]="showReviewDetails" [responsive]="true"
+    [style]="{width: '630px', minWidth: '320px'}" [closable]="false">
+    <div class="ui-grid-row" style="margin: 20px 0px">
+      <div class="ui-grid-col-3" style="text-align:right">
+        <span style="font-weight:bold">Rating : </span>
+      </div>
+      <div class="ui-grid-col-8">
+        <input type="text" pInputText name="reviewType" [ngModel]="reviewDetail.r_type_des" [disabled]="true">
+      </div>
     </div>
-    <div class="ui-grid-col-8">
-      <input type="text" pInputText name="reviewType" [ngModel]="reviewDetail.r_type_des" [disabled]="true">
+    <div class="ui-grid-row" style="margin: 20px 0px">
+      <div class="ui-grid-col-3" style="text-align:right">
+        <span style="font-weight:bold">Comment : </span>
+      </div>
+      <div class="ui-grid-col-8">
+        <textarea type="text" pInputTextarea name="reviwComments" [ngModel]="reviewDetail.r_comment" [disabled]="true"
+          rows="3" cols="30"></textarea>
+      </div>
     </div>
-  </div>
-  <div class="ui-grid-row" style="margin: 20px 0px">
-    <div class="ui-grid-col-3" style="text-align:right">
-      <span style="font-weight:bold">Comment : </span>
+    <div class="ui-grid-row" style="margin: 20px 0px">
+      <div class="ui-grid-col-3" style="text-align:right">
+        <span style="font-weight:bold">Review Date : </span>
+      </div>
+      <div class="ui-grid-col-8">
+        <input type="date" pInputText name="reviewDate" [ngModel]="reviewDetail.r_date | date:'yyyy-MM-dd' : 'UTC'"
+          [disabled]="true">
+      </div>
     </div>
-    <div class="ui-grid-col-8">
-      <textarea type="text" pInputTextarea name="reviwComments" [ngModel]="reviewDetail.r_comment" [disabled]="true"
-        rows="3" cols="30" ></textarea>
-    </div>
-  </div>
-  <div class="ui-grid-row" style="margin: 20px 0px">
-    <div class="ui-grid-col-3" style="text-align:right">
-      <span style="font-weight:bold">Review Date : </span>
-    </div>
-    <div class="ui-grid-col-8">
-      <input type="date" pInputText name="reviewDate" [ngModel]="reviewDetail.r_date | date:'yyyy-MM-dd' : 'UTC'"
-        [disabled]="true">
-    </div>
-  </div>
-  <p-footer>
-    <button pButton type="button" label="Close" icon="fa fa-window-close" (click)="closeReviewDetial()"></button>
-  </p-footer>
-</p-dialog>
+    <p-footer>
+      <button pButton type="button" label="Close" icon="fa fa-window-close" (click)="closeReviewDetial()"></button>
+    </p-footer>
+  </p-dialog>
 
-
+</form>

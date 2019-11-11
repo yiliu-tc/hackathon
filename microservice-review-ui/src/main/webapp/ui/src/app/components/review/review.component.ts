@@ -62,6 +62,12 @@ export class ReviewComponent implements OnInit {
     }
   }
 
+  keyDownFunction(event) {
+    if (event.keyCode === 13 && !this.userLoggedIn && this.credentials.password && this.credentials.userName) {
+      this.login();
+    }
+  }
+
   login() {
     if (!this.credentials.password || !this.credentials.userName) {
       this.msgs = [];
@@ -91,6 +97,7 @@ export class ReviewComponent implements OnInit {
     sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
     this.credentials = new LoginUser();
     this.userLoggedIn = false;
+    this.resetData();
   }
 
   private createBasicAuthToken(credentials: LoginUser): string {
