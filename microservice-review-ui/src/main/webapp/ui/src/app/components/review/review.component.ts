@@ -1,8 +1,8 @@
-import { Component, OnInit, Injectable} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ReviewService } from '../../services/review-service.service';
 import { RatingType } from 'src/app/models/rating-type';
 import { Review } from 'src/app/models/review';
-import { SelectItem, MessageService} from 'primeng/api';
+import { SelectItem} from 'primeng/api';
 import { ReviewVo } from 'src/app/models/review-vo';
 import {Message} from 'primeng/components/common/api';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
@@ -36,9 +36,7 @@ export class ReviewComponent implements OnInit {
   reviewDetail: ReviewVo;
   showReviewDetails: boolean;
 
-  constructor(private messageService: MessageService,
-    private reviewService: ReviewService, private loginService: LoginService,
-    private confirmationService: ConfirmationService) {
+  constructor(private reviewService: ReviewService, private loginService: LoginService) {
       this.credentials = new LoginUser();
       this.userLoggedIn = false;
       this.reviews = new Array();
@@ -91,6 +89,7 @@ export class ReviewComponent implements OnInit {
 
   public logout() {
     sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+    this.credentials = new LoginUser();
     this.userLoggedIn = false;
   }
 
