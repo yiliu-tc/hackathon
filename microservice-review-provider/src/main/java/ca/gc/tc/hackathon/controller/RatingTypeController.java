@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@Api(value="yiliu_hackathon", description="query rating types for yi liu hackathon")
+@Api(value="HOSA Service", description="query rating types for HOSA Service")
 public class RatingTypeController {
 
     @Autowired
@@ -27,7 +27,7 @@ public class RatingTypeController {
     @GetMapping(value="/rating-types/{id}")
     @ApiOperation(value = "Search an Rating Type with rating type ID", response = Iterable.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully get result"),
+            @ApiResponse(code = 200, message = "Successfully get result", response = RatingType.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
@@ -40,9 +40,9 @@ public class RatingTypeController {
 
     @CrossOrigin
     @GetMapping(value="/rating-types")
-    @ApiOperation(value = "View a list of available rating types", response = Iterable.class)
+    @ApiOperation(value = "View a list of available rating types", response = RatingType.class, responseContainer = "List")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully Get All Rating Types"),
+            @ApiResponse(code = 200, message = "Successfully Get All Rating Types", response = RatingType.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
@@ -58,7 +58,8 @@ public class RatingTypeController {
     private void configHateoasLink(RatingType ratingType, Integer rate_type_id) {
         if (ratingType != null) {
             Link selfLink = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(RatingTypeController.class)
-                    .get(rate_type_id)).withSelfRel();
+                    .get(rate_type_id)).withSelfRel().withMedia("application/json").withType("GET")
+                    .withTitle("Get Rating Type with ID " + rate_type_id);
             ratingType.add(selfLink);
         }
     }

@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
-@Api(value="yiliu_hackathon", description="Operations review for yi liu hackathon")
+@Api(value="HOSA Service", description="Operations review for HOSA service")
 public class ReviewController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class ReviewController {
     @PostMapping(value="/review")
     @ApiOperation(value = "Add an Review", response = Iterable.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successfully Add"),
+            @ApiResponse(code = 201, message = "Successfully Add", response = Review.class),
             @ApiResponse(code = 400, message = "Invalid Information in the Request"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
@@ -53,9 +53,9 @@ public class ReviewController {
 
     @CrossOrigin
     @PostMapping(value="/reviews")
-    @ApiOperation(value = "Add Reviews", response = Iterable.class)
+    @ApiOperation(value = "Add Reviews", response = Review.class, responseContainer = "List")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successfully Add"),
+            @ApiResponse(code = 201, message = "Successfully Add", response = Review.class, responseContainer = "List"),
             @ApiResponse(code = 400, message = "Invalid Information in the Request"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
@@ -75,9 +75,9 @@ public class ReviewController {
 
     @CrossOrigin
     @GetMapping(value="/reviews/{id}")
-    @ApiOperation(value = "Search an Review with review ID", response = Iterable.class)
+    @ApiOperation(value = "Search an Review with review ID", response = Review.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully get result"),
+            @ApiResponse(code = 200, message = "Successfully get result", response = Review.class),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
@@ -90,9 +90,9 @@ public class ReviewController {
 
     @CrossOrigin
     @GetMapping(value="/reviews")
-    @ApiOperation(value = "View a list of available products", response = Iterable.class)
+    @ApiOperation(value = "View a list of available products", response = Review.class, responseContainer = "List")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully Get All Reviews"),
+            @ApiResponse(code = 200, message = "Successfully Get All Reviews", response = Review.class, responseContainer = "List"),
             @ApiResponse(code = 401, message = "You are not authorized to view the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
@@ -108,12 +108,14 @@ public class ReviewController {
     private void configHateoasLink(Review review) {
         if (review != null) {
             Link selfLink = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(ReviewController.class)
-                    .get(review.getR_id())).withSelfRel();
+                    .get(review.getR_id())).withSelfRel().withType("GET")
+                    .withTitle("Get Review with ID " + review.getR_id()).withMedia("application/json");;
             review.add(selfLink);
             RatingType ratingType = review.getR_type();
             if (ratingType != null) {
                 Link ratingTypeLink = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(RatingTypeController.class)
-                        .get(ratingType.getRate_type_id())).withSelfRel();
+                        .get(ratingType.getRate_type_id())).withSelfRel().withType("GET")
+                        .withTitle("Get Rating Type with ID " + ratingType.getRate_type_id()).withMedia("application/json");
                 ratingType.add(ratingTypeLink);
             }
         }

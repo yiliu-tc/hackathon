@@ -1,5 +1,6 @@
 package ca.gc.tc.hackathon.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +16,12 @@ import java.util.Date;
 @Accessors(chain=true)
 public class Review extends ResourceSupport implements Serializable {
 
+    @ApiModelProperty(notes = "review id", example = "1")
     private Integer r_id;
     private RatingType r_type;
+    @ApiModelProperty(notes = "review comment", example = "I like this service")
     private String r_comment;
+    @ApiModelProperty(notes = "review date", example = "2019-01-01")
     private Date r_date;
 
 }

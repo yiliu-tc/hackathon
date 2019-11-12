@@ -14,6 +14,7 @@ public class ReviewVO {
 
     @ApiModelProperty(notes = "rating type id", example = "1")
     private Integer r_type_id;
+    @ApiModelProperty(notes = "rating type id", example = "I like this service")
     private String r_comment;
 
 }

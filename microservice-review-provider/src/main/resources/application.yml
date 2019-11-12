@@ -23,6 +23,11 @@ spring:
       max-total: 10                                   # maximum connection pool size
       max-wait-millis: 200                            # maximum waiting time in millisecond
 
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api/v1/api-docs
 
 #logging:
 #  level:
